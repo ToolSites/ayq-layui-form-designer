@@ -23,7 +23,7 @@
 
     希望有bug及时给我反馈，我会根据问题进行完善，也希望小伙伴也可以加入进来一起完善，一起开发。
 
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0524/161501_6e508f22_4776207.png "12.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0524/161635_1627108b_4776207.png "13.PNG")
 
 
 #### 特技
