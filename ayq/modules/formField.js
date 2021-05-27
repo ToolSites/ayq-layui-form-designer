@@ -79,9 +79,7 @@ layui.define(['layer'], function (exports) {
             tag: "radio",
             tagIcon: 'radio',
             labelWidth: null,
-            width:"100%",
             disabled: false,
-            required: true,
             document: '',
             datasourceType: 'local',
             remoteUrl: 'http://',
@@ -113,7 +111,8 @@ layui.define(['layer'], function (exports) {
             tag: "checkbox",
             tagIcon: 'checkbox',
             labelWidth: null,
-            width:"100%",
+            disabled: false,
+            required: true,
             document: '',
             datasourceType: 'local',
             remoteUrl: 'http://',
@@ -176,20 +175,19 @@ layui.define(['layer'], function (exports) {
             width:"100%",
             clearable: true,
             maxlength: null,
-            defaultValue: null,
+            dateDefaultValue: '2021-05-25',
             datetype: "date",//year month date time datetime
             range: false,
             dateformat: "yyyy-MM-dd",
             isInitValue: false,
-            maxValue: "9999-12-31",
-            minValue: "1900-1-1",
+            dataMaxValue: "2088-12-31",
+            dataMinValue: "1900-01-01",
             trigger: null,//自定义弹出控件的事件
             position: "absolute",//fixed,static,abolute
             theme: "default",
             mark: null,//每年的日期	{'0-9-18': '国耻'}	0 即代表每一年
             showBottom: true,
             zindex:66666666,
-            readonly: false,
             disabled: false,
             required: true,
             document: '',
@@ -220,10 +218,11 @@ layui.define(['layer'], function (exports) {
             width: "100%",
             height: "500px",
             full: false,//是否全屏
-            autoplay: true,//是否自动切换
+            anim: "default", //轮播切换动画方式,
             interval: 3000,//切换时间 毫秒
             startIndex: 0,//初始索引
-            arrow: "hover",
+            arrow: "hover",//切换箭头默认显示状态
+            autoplay: true,//是否自动切换
             document: '',
             datasourceType: 'local',
             remoteUrl: 'http://',
@@ -233,17 +232,17 @@ layui.define(['layer'], function (exports) {
             options: [
                 {
                     text: 'banner1',
-                    value: './ayq/images/banner1.PNG',
+                    value: '/static/images/banner1.PNG',
                     checked: true,
                 },
                 {
                     text: 'banner2',
-                    value: './ayq/images/banner2.PNG',
+                    value: '/static/images/banner2.PNG',
                     checked: false,
                 },
                 {
                     text: 'banner3',
-                    value: './ayq/images/banner3.PNG',
+                    value: '/static/images/banner3.PNG',
                     checked: false,
                 },
             ]
