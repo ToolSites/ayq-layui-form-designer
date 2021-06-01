@@ -28,6 +28,8 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0524/161635_1627108b_4776207.png "13.PNG")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0527/094341_983939d5_4776207.png "14.PNG")
 
+#### 测试地址
+[http://116.62.237.101:8009/](http://)
 
 #### 特技
 
