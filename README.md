@@ -26,7 +26,10 @@
     希望有bug及时给我反馈，我会根据问题进行完善，也希望小伙伴也可以加入进来一起完善，一起开发。
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0524/161635_1627108b_4776207.png "13.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0527/094341_983939d5_4776207.png "14.PNG")
 
+#### 测试地址
+[http://www.ayq.com/](http://116.62.237.101:8009/)
 
 #### 特技
 
