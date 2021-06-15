@@ -198,6 +198,7 @@
 #formDesignerForm .widget-slider {
     margin: 18px 10px;
     width : 90%;
+    position: absolute!important;
 }
 
 .layui-empty {
@@ -333,4 +334,10 @@ body .cool-black .layui-layer-btn a {
 
 .aboutusview .about .yellow{
     color:#e6ec8d;
+}
+
+.layui-disabled {
+    background-color: #f5f7fa;
+    border-color: #dfe4ed;
+    color: #c0c4cc;
 }

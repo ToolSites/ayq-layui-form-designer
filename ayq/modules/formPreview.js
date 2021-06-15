@@ -218,8 +218,10 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _readonly = json.readonly ? 'readonly=""' : '';
                     var _required = json.required ? 'required' : '';
                     var _disabledClass = json.disabled ? ' layui-disabled' : '';
-                    if (json.expression !== null && json.expression !== undefined && json.expression !== '') {
-                        _required = _required + '|' + json.expression;
+                    if (json.expression !== null && json.expression !== undefined ) {
+                        if (json.expression !== '') {
+                            _required = 'required' + '|' + json.expression;
+                        }
                     }
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
@@ -430,9 +432,9 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     }
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
-                    _html += '<div class="layui-input-block">';
-
+                    _html += '<div class="layui-input-block" style="width:calc({0} - 110px);">'.format(json.width);
                     _html += '<div id="{0}" class="widget-slider"></div>'.format(json.tag + json.id);
+                    _html += '<input name="{0}" type="hidden" value="{1}"></input>'.format(json.id,json.defaultValue);
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
@@ -462,7 +464,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block">';
-                    _html += '<div id="{0}" class="layui-input icon-date widget-date {1}" style="line-height: 40px;{2}"></div>'.format(json.tag + json.id, _disabledClass, _disabledStyle);
+                    _html += '<input id="{0}" name="{0}" class="layui-input icon-date widget-date {1}" style="line-height: 40px;{2}"></input>'.format(json.tag + json.id, _disabledClass, _disabledStyle);
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
@@ -490,8 +492,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block">';
-
                     _html += '<div id="{0}" class="widget-rate"></div>'.format(json.tag + json.id);
+                    _html += '<input name="{0}" type="hidden" value="{1}"></input>'.format(json.id,json.defaultValue);
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
@@ -553,8 +555,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block">';
-
                     _html += '<div id="{0}" class="widget-rate"></div>'.format(json.tag + json.id);
+                    _html += '<input name="{0}" type="hidden" value="{1}"></input>'.format(json.id,json.defaultValue);
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
@@ -652,7 +654,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     if (selected === undefined) {
                         selected = false;
                     }
-                    var _html = '<div id="{0}" class="layui-form-item layui-form-text {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    var _html = '<div id="{0}" class="layui-form-item layui-form-text {2}" style="width: {4}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index,json.width);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block">';
                     _html += '<textarea id="{0}" style="display: none; "></textarea>'.format(json.tag + json.id);
@@ -822,7 +824,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         value: item.defaultValue, //初始值 
                         min: item.minValue,
                         max: item.maxValue,
-                        step: item.stepValue
+                        step: item.stepValue,
+                        input:item.isInput,
+                        change: function(value){
+                            $("#" + item.id).find("input[name=" + item.id + "]").val(value);
+                        }
                     });
                 } else if (item.tag === 'checkbox') {
                     var bool = false;
@@ -866,13 +872,18 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         value: item.defaultValue,
                         text: item.text,
                         half: item.half,
+                        length: item.rateLength,
+                        readonly: item.readonly,
+                        choose: function(value){
+                            $("#" + item.id).find("input[name=" + item.id + "]").val(value);
+                        }
                     });
                 } else if (item.tag === 'colorpicker') {
                     colorpicker.render({
                         elem: '#' + item.tag + item.id,
+                        color: item.defaultValue,
                         done: function (color) {
-                            console.log(color)
-                            //譬如你可以在回调中把得到的 color 赋值给表单
+                            $("#" + item.id).find("input[name=" + item.id + "]").val(color);
                         }
                     });
                 } else if (item.tag === 'editor') {
