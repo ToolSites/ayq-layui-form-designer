@@ -129,11 +129,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
 
                     , options = that.config;
                 return {
-                    config: options
-
-                    , reload: function (options) {
+                    reload: function (options) {
                         that.reload.call(that
                             , options);
+                    },getOptions:function () {
+                        return options || null;
+                    },getData : function () {
+                        return options.data || null;
                     }
                 }
             }

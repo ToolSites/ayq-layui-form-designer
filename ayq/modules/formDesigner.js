@@ -523,11 +523,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             , thisIns = function () {
                 var that = this
                     , options = that.config;
-                return {
-                    config: options
-                    , reload: function (options) {
+                return { reload: function (options) {
                         that.reload.call(that
                             , options);
+                    },getOptions:function () {
+                        return options || null;
+                    },getData : function () {
+                        return options.data || null;
                     }
                 }
             }
