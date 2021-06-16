@@ -3,10 +3,10 @@
 #### 介绍
 基于layui的表单设计器
 
+#### 演示地址
+[http://www.ayq.com/](http://116.62.237.101:8009/)
+
 #### 使用说明
-
-本项目是一个基于layui表单组件的表单设计器，是基于fwr-layui-formdesigner上做的二次开发，由于fwr-layui-formdesigner不在维护，存在各种问题，页面比较简洁，支持组件也少，组件的自定义交互更是一塌糊涂，各种逻辑bug、交互bug根本没法使用，即修改了大部分的代码，完善了大部分问题。
-
 
 1. 本项目基于Layui、Jquery、Sortable
 2. 项目已经基本实现了拖动布局，父子布局
@@ -15,8 +15,7 @@
 #### 开发计划
 
 1.  支持layui表单组件
-2.  支持layui的全部组件
-3.  支持echarts可视化统计图
+2.  支持layui的扩展组件
 3.  支持引入数据源
 4.  支持代码自动生成
 5.  支持定制布局和背景
@@ -28,8 +27,158 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0524/161635_1627108b_4776207.png "13.PNG")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0527/094341_983939d5_4776207.png "14.PNG")
 
-#### 测试地址
-[http://www.ayq.com/](http://116.62.237.101:8009/)
+#### 入门案例
+
+
+```
+var render = formDesigner.render({
+                data:[],
+                elem:'#formdesigner'
+            });
+
+
+//获取相关配置信息
+render.getOptions() 
+{
+    "version": "1.0.0",
+    "formName": "表单示例",
+    "formId": "id",
+    "generateId": 1,
+    "data": [
+        {
+            "id": "input_1",
+            "index": 0,
+            "label": "单行文本",
+            "tag": "input",
+            "tagIcon": "input",
+            "placeholder": "请输入",
+            "defaultValue": null,
+            "labelWidth": null,
+            "width": "100%",
+            "clearable": true,
+            "maxlength": null,
+            "showWordLimit": false,
+            "readonly": false,
+            "disabled": false,
+            "required": true,
+            "expression": "",
+            "document": ""
+        }
+    ],
+    "dataSource": {},
+    "htmlCode": {
+        "css": "",
+        "html": "",
+        "script": ""
+    },
+    "elem": {
+        "0": {},
+        "length": 1,
+        "context": {
+            "location": {
+                "ancestorOrigins": {},
+                "href": "http://localhost:8083/activitiManager/getFormDesigner/1402562618899579000?authorization=178aa01f-32b9-450e-96a4-e6e531dcef36%231",
+                "origin": "http://localhost:8083",
+                "protocol": "http:",
+                "host": "localhost:8083",
+                "hostname": "localhost",
+                "port": "8083",
+                "pathname": "/activitiManager/getFormDesigner/1402562618899579000",
+                "search": "?authorization=178aa01f-32b9-450e-96a4-e6e531dcef36%231",
+                "hash": ""
+            },
+            "jQuery112305065006406520325": 1
+        },
+        "selector": "#formdesigner"
+    },
+    "id": "formdesigner",
+    "selectItem": {
+        "id": "input_1",
+        "index": 0,
+        "label": "单行文本",
+        "tag": "input",
+        "tagIcon": "input",
+        "placeholder": "请输入",
+        "defaultValue": null,
+        "labelWidth": null,
+        "width": "100%",
+        "clearable": true,
+        "maxlength": null,
+        "showWordLimit": false,
+        "readonly": false,
+        "disabled": false,
+        "required": true,
+        "expression": "",
+        "document": ""
+    }
+}
+
+//获取表单数据
+render.getData()
+[
+    {
+        "id": "input_1",
+        "index": 0,
+        "label": "单行文本",
+        "tag": "input",
+        "tagIcon": "input",
+        "placeholder": "请输入",
+        "defaultValue": null,
+        "labelWidth": null,
+        "width": "100%",
+        "clearable": true,
+        "maxlength": null,
+        "showWordLimit": false,
+        "readonly": false,
+        "disabled": false,
+        "required": true,
+        "expression": "",
+        "document": ""
+    }
+]
+```
+
+#### 基础参数
+
+| 参数  | 类型  | 说明  |  示例值 |
+|---|---|---|---|
+|  elem |  String | 指定原始 table 容器的选择器，方法渲染方式必填  | "#elem"  |
+|  data |  Array | 直接赋值数据  |  [{},{},...] |
+
+#### 组件参数
+
+| 参数  | 类型  | 说明  |  示例值 |
+|---|---|---|---|
+|  id |  String | 指定组件标识（唯一），表单提交字段name值  | "field"  |
+|  label | String  | 文本框标题  |  "姓名" |
+|  tag | String  | 表单类型  |  "input" |
+|  placeholder | String  | placeholder  |  "请输入" |
+|  defaultValue | object  | 组件默认值  |  "姓名" |
+|  width | String  | 组件宽度  |  "100%" |
+|  labelWidth | String  | 文本框宽度  |  "250px" |
+|  readonly | Boolean  | 只读  |  true,false |
+|  disabled | Boolean  | 禁用  |  true,false |
+|  required | Boolean  | 必填  |  true,false |
+|  columns | number  | 栅格布局列数  |  true,false |
+|  maxValue | object  | 最大值  |  "" |
+|  minValue | object  | 最小值  |  "" |
+|  expression | String  | 验证  |  "email" |
+|  stepValue | number  | 滑块步长  |  2 |
+|  isInput | Boolean  | 滑块显示输入框  |  true,false |
+|  datetype | String  | 日期类型  |  "时间选择器" |
+|  dateformat | String  | 日期格式  |  "yyyy-MM-dd" |
+|  rateLength | number  | 星星个数  |  5 |
+|  interval | number  | 轮播间隔毫秒  |  3000 |
+|  autoplay | Boolean  | 轮播自动切换  |  true,false |
+|  anim | object  | 切换方式  |  {text: '左右切换', value: 'default'} |
+|  arrow | object  | 切换箭头  |  {text: '悬停显示', value: 'hover'} |
+
+#### 更新日志
+- 2021-06-15 
+    1. 增加输入框layui提供的基本校验规则
+    2. 禁用的显示效果优化
+    3. 优化表单展示滑块、评分、颜色选择器提交无法获取字段值得问题
+
 
 #### 特技
 
