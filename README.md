@@ -36,6 +36,8 @@ var render = formDesigner.render({
                 elem:'#formdesigner'
             });
 
+//重新渲染数据
+render.reload(options)
 
 //获取相关配置信息
 render.getOptions() 
