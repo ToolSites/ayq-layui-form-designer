@@ -657,6 +657,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
         Class.prototype.config = {
             version: "1.0.0"
             , formName: "表单示例"
+			, Author: "谁家没一个小强"
+			, QQ:"947201386"
             , formId: "id"
             , generateId: 0
             , data: []
