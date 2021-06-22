@@ -128,8 +128,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 var that = this
 
                     , options = that.config;
-                return {
-                    reload: function (options) {
+                return { reload: function (options) {
                         that.reload.call(that
                             , options);
                     },getOptions:function () {
@@ -406,8 +405,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block" style="border: 1px solid #d2d2d2;border-left: 0px;">';
-
-                    _html += '<input type="checkbox" name="{0}" lay-skin="switch" lay-text="ON|OFF" {1} class="{2}" {3}>'.format(json.tag, _disabled, _disabledClass, json.switchValue ? 'checked' : '');
+                    _html += '<input type="checkbox" name="{0}" lay-skin="switch" lay-text="ON|OFF" {1} class="{2}" {3}>'.format(json.id, _disabled, _disabledClass, json.switchValue ? 'checked' : '');
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
@@ -480,6 +478,43 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     return _json;
 
                 }
+            },dateRange: {
+                /**
+                 * 根据json对象生成html对象
+                 * @param {object} json
+                 * @param {boolean} selected true 表示选择当前
+                 * */
+                render: function (json, selected) {
+                    if (selected === undefined) {
+                        selected = false;
+                    }
+                    var _disabledClass = json.disabled ? ' layui-disabled' : '';
+                    var _disabledStyle = json.disabled ? ' pointer-events: none;' : '';
+                    var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    _html += '<div class="layui-inline">';
+                    _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
+                    _html += '<div class="layui-inline" id="{0}" style="line-height: 40px;{1}">'.format(json.tag + json.id,_disabledStyle);
+                    _html += '<div class="layui-input-inline">';
+                    _html += '<input id="start-{0}" name="start{2}" class="layui-input {1}" autocomplete="off" placeholder="开始日期"></input>'.format(json.tag + json.id,_disabledClass,json.id);
+                    _html += '</div>';
+                    _html += '<div class="layui-form-mid">-</div>';
+                    _html += '<div class="layui-input-inline">';
+                    _html += '<input id="end-{0}" name="end{2}" class="layui-input {1}" autocomplete="off" placeholder="结束日期"></input>'.format(json.tag + json.id,_disabledClass,json.id);
+                    _html += '</div>';
+                    _html += '</div>';
+                    _html += '</div>';
+                    _html += '</div>';
+                    return _html;
+                },
+                /* 获取对象 */
+                jsonData: function (id, index, columncount) {
+                    //分配一个新的ID
+                    var _json = JSON.parse(JSON.stringify(formField.dateRange));
+                    _json.id = id == undefined ? guid() : id;
+                    _json.index = index;
+                    return _json;
+
+                },
             },
             rate: {
                 /**
@@ -868,6 +903,22 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         min: item.dataMinValue,
                         max: item.dataMaxValue,
                     });
+                } else if (item.tag === 'dateRange') {
+                    laydate.render({
+                        elem: '#' + item.tag + item.id,
+                        type: item.datetype,
+                        format: item.dateformat,
+                        //value: item.dateDefaultValue,
+                        min: item.dataMinValue,
+                        max: item.dataMaxValue,
+                        range: ['#start-' + item.tag + item.id, '#end-' + item.tag + item.id]
+                    });
+                    if (item.dateRangeDefaultValue !== null && item.dateRangeDefaultValue !== ""
+                        && item.dateRangeDefaultValue !== undefined) {
+                        var split = item.dateRangeDefaultValue.split(" - ");
+                        $('#start-' + item.tag + item.id).val(split[0]);
+                        $('#end-' + item.tag + item.id).val(split[1]);
+                    }
                 } else if (item.tag === 'rate') {
                     rate.render({
                         elem: '#' + item.tag + item.id,

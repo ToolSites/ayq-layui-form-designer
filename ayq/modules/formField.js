@@ -193,6 +193,32 @@ layui.define(['layer'], function (exports) {
             required: true,
             document: '',
         },
+        dateRange: {
+            id:'-1',
+            index:'-1',
+            label: "日期范围",
+            tag: "dateRange",
+            tagIcon: 'dateRange',
+            labelWidth: null,
+            //width:"100%",
+            dateRangeDefaultValue: "2021-06-19 - 2021-07-17",
+            clearable: true,
+            maxlength: null,
+            datetype: "date",//year month date time datetime
+            dateformat: "yyyy-MM-dd",
+            isInitValue: true,
+            dataMaxValue: "2088-12-31",
+            dataMinValue: "1900-01-01",
+            trigger: null,//自定义弹出控件的事件
+            position: "absolute",//fixed,static,abolute
+            theme: "default",
+            mark: null,//每年的日期	{'0-9-18': '国耻'}	0 即代表每一年
+            showBottom: true,
+            zindex:66666666,
+            disabled: false,
+            required: true,
+            document: '',
+        },
         rate: {
             id:'-1',
             index:'-1',
@@ -233,17 +259,17 @@ layui.define(['layer'], function (exports) {
             options: [
                 {
                     text: 'banner1',
-                    value: '/static/images/banner1.PNG',
+                    value: '/ayq/images/banner1.PNG',
                     checked: true,
                 },
                 {
                     text: 'banner2',
-                    value: '/static/images/banner2.PNG',
+                    value: '/ayq/images/banner2.PNG',
                     checked: false,
                 },
                 {
                     text: 'banner3',
-                    value: '/static/images/banner3.PNG',
+                    value: '/ayq/images/banner3.PNG',
                     checked: false,
                 },
             ]
@@ -345,7 +371,7 @@ layui.define(['layer'], function (exports) {
         }
         ,c2:{
             name:"选择型组件",
-            list:['select','radio','checkbox','switch','slider','date','rate','carousel','colorpicker','image','file']
+            list:['select','radio','checkbox','switch','slider','date','rate','carousel','colorpicker','image','file','dateRange']
         }
         ,c3:{
             name:"布局型组件",

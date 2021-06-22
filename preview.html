@@ -64,7 +64,8 @@
     var demojs = [];
     //JavaScript代码区域
     layui.config(
-		{base: './ayq/modules/'}).use(['formPreview', 'form'], function () {
+		{base: './ayq/modules/'}).use(['formPreview', 'form','layer'], function () {
+      var layer = layui.layer;
       var $ = layui.jquery;
       var index = layui.index;
       var formPreview = layui.formPreview;
@@ -78,10 +79,9 @@
       }
       //监听提交
       form.on('submit(demo1)', function(data){
-        console.log(data);
         var json = data.field;
-        var temp = JSON.stringify(json);
-        $.ajax({
+        layer.msg( JSON.stringify(json), {icon: 6});
+        /*$.ajax({
           url:"/activiti-manager/addActivitiManagera",
           type:"POST",
           data:temp,
@@ -90,7 +90,7 @@
           success:function(res){
             alert(res.message);
           }
-        });
+        });*/
         return false;
       });
     });

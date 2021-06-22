@@ -64,7 +64,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 theme: "皮肤",
                 rateLength: "星星个数",
                 interval: "间隔毫秒",
-                autoplay: "自动播放",
                 startIndex: "开始位置",
                 full: "是否全屏",
                 arrow: "鼠标样式",
@@ -94,7 +93,9 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 arrow: "切换箭头",
                 tab:"tab选项卡",
                 tabHeaders:"tab标题",
-                isInput:"显示输入框"
+                isInput:"显示输入框",
+                dateRange:"日期范围",
+                dateRangeDefaultValue:"默认范围",
 
             }
             , expressions = [{text: '默认', value: ''}
@@ -116,7 +117,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 , {text: '时间选择器', value: 'time'}
                 , {text: '日期选择器', value: 'date'}
                 , {text: '日期时间选择器', value: 'datetime'}]
-            , dateformats = ["yyyy年M月", "yyyy-MM-dd", "dd/MM/yyyy", "yyyyMMdd", "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH时mm分ss秒"]
+            , dateformats = ["yyyy年MM月", "yyyy-MM-dd", "dd/MM/yyyy", "yyyyMMdd", "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH时mm分ss秒"]
             , renderCommonProperty = function (json) {
                 var _html = '';
                 for (var key in json) {
@@ -385,6 +386,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         _html += '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format(key + json.tag + json.id);
                         _html += '</div>';
                         _html += '</div>';
+                    }else if (key === 'dateRangeDefaultValue') {
+                        _html += '<div id="{0}" class="layui-form-item" ">'.format(key + json.id);
+                        _html += '<label class="layui-form-label">{0}:</label>'.format(lang[key]);
+                        _html += '<div class="layui-input-block"">';
+                        _html += '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format(key + json.tag + json.id);
+                        _html += '</div>';
+                        _html += '</div>';
                     }
                 }
                 return _html;
@@ -440,7 +448,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 , '</div>'
                 , '<div class="layui-body">'
                 , '<!-- 内容主体区域 -->'
-                , '<form class="layui-form layui-form-pane" style="height:100%;">'
+                , '<form class="layui-form layui-form-pane" style="height:98%;">'
                 , '<div class="layui-form" id="formDesignerForm" lay-filter="formDesignerForm">'
                 , '<div class="layui-row layui-empty">'
                 , '从左侧拖拽控件到此设计区域来添加字段'
@@ -523,7 +531,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             , thisIns = function () {
                 var that = this
                     , options = that.config;
-                return { reload: function (options) {
+                return {
+                    reload: function (options) {
                         that.reload.call(that
                             , options);
                     },getOptions:function () {
@@ -543,7 +552,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             }
             , Class = function (options) {
                 var that = this;
-                that.index = ++formDesigner.index; //增加实例，index 也是要增加
+                that.index = ++formDesigner.index; //增加实例，index 也是要增加JSON.stringify(options.data, null, 4)
                 that.config = $.extend({}
                     , that.config
                     , formDesigner.config
@@ -657,8 +666,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
         Class.prototype.config = {
             version: "1.0.0"
             , formName: "表单示例"
-			, Author: "谁家没一个小强"
-			, QQ:"947201386"
             , formId: "id"
             , generateId: 0
             , data: []
@@ -1028,8 +1035,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label">{0}:</label>'.format(json.label);
                     _html += '<div class="layui-input-block" style="border: 1px solid #d2d2d2;border-left: 0px;">';
-
-                    _html += '<input type="checkbox" name="{0}" lay-skin="switch" lay-text="ON|OFF" {1} class="{2}" {3}>'.format(json.tag, _disabled, _disabledClass, json.switchValue ? 'checked' : '');
+                    _html += '<input type="checkbox" name="{0}" lay-skin="switch" lay-text="ON|OFF" {1} class="{2}" {3}>'.format(json.id, _disabled, _disabledClass, json.switchValue ? 'checked' : '');
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
@@ -1135,9 +1141,17 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _disabledClass = json.disabled ? ' layui-disabled' : '';
                     var _disabledStyle = json.disabled ? ' pointer-events: none;' : '';
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    _html += '<div class="layui-inline">';
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
-                    _html += '<div class="layui-input-block" style="width:calc({0} - 110px);">'.format(json.width);
-                    _html += '<input id="{0}" class="layui-input icon-date widget-date {1}" style="line-height: 40px;{2}"></input>'.format(json.tag + json.id,_disabledClass,_disabledStyle);
+                    _html += '<div class="layui-inline" id="{0}" style="line-height: 40px;{1}">'.format(json.tag + json.id,_disabledStyle);
+                    _html += '<div class="layui-input-inline">';
+                    _html += '<input id="start-{0}" name="start{2}" class="layui-input {1}" autocomplete="off" placeholder="开始日期"></input>'.format(json.tag + json.id,_disabledClass,json.id);
+                    _html += '</div>';
+                    _html += '<div class="layui-form-mid">-</div>';
+                    _html += '<div class="layui-input-inline">';
+                    _html += '<input id="end-{0}" name="end{2}" class="layui-input {1}" autocomplete="off" placeholder="结束日期"></input>'.format(json.tag + json.id,_disabledClass,json.id);
+                    _html += '</div>';
+                    _html += '</div>';
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
@@ -1145,24 +1159,40 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 update: function (json) {
                     var _disabledClass = json.disabled ? ' layui-disabled' : '';
                     var _disabledStyle = json.disabled ? ' pointer-events: none;' : '';
-                    var _html = '<input id="{0}" class="layui-input icon-date widget-date {1}" style="line-height: 40px;{2}"></input>'.format(json.tag + json.id,_disabledClass,_disabledStyle);
-                    $('#' + json.id + ' .layui-input-block').empty();
-                    $('#' + json.id + ' .layui-input-block').append(_html);
-                    $('#' + json.id + ' .layui-input-block').css({width: 'calc({0} - 110px'.format(json.width)});
+                    var _html = '<div class="layui-inline">';
+                    _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
+                    _html += '<div class="layui-inline" id="{0}" style="line-height: 40px;{1}">'.format(json.tag + json.id,_disabledStyle);
+                    _html += '<div class="layui-input-inline">';
+                    _html += '<input id="start-{0}" name="start{2}" class="layui-input {1}" autocomplete="off" placeholder="开始日期" ></input>'.format(json.tag + json.id,_disabledClass,json.id);
+                    _html += '</div>';
+                    _html += '<div class="layui-form-mid">-</div>';
+                    _html += '<div class="layui-input-inline">';
+                    _html += '<input id="end-{0}" name="end{2}" class="layui-input {1}" autocomplete="off" placeholder="结束日期"></input>'.format(json.tag + json.id,_disabledClass,json.id);
+                    _html += '</div>';
+                    _html += '</div>';
+                    _html += '</div>';
+                    $('#' + json.id).empty();
+                    $('#' + json.id).append(_html);
                     laydate.render({
                         elem: '#' + json.tag + json.id,
-                        btns: ['confirm'],
                         type: json.datetype,
                         format: json.dateformat,
-                        value: json.dateDefaultValue,
+                        //value: item.dateDefaultValue,
                         min: json.dataMinValue,
                         max: json.dataMaxValue,
+                        range: ['#start-' + json.tag + json.id, '#end-' + json.tag + json.id]
                     });
+                    if (json.dateRangeDefaultValue !== null && json.dateRangeDefaultValue !== ""
+                        && json.dateRangeDefaultValue !== undefined) {
+                        var split = json.dateRangeDefaultValue.split(" - ");
+                        $('#start-' + json.tag + json.id).val(split[0]);
+                        $('#end-' + json.tag + json.id).val(split[1]);
+                    }
                 },
                 /* 获取对象 */
                 jsonData: function (id, index, columncount) {
                     //分配一个新的ID  
-                    var _json = JSON.parse(JSON.stringify(formField.date));
+                    var _json = JSON.parse(JSON.stringify(formField.dateRange));
                     _json.id = id == undefined ? guid() : id;
                     _json.index = index;
                     return _json;
@@ -1813,6 +1843,17 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     that.components[_json.tag].update(_json);
                 }
             });
+            laydate.render({
+                elem: '#dateRangeDefaultValue' + _json.tag + _json.id,
+                type: _json.datetype,
+                format: _json.dateformat,
+                value: _json.dateRangeDefaultValue,
+                range:"-",
+                done: function(value, date, endDate){
+                    _json.dateRangeDefaultValue = value;
+                    that.components[_json.tag].update(_json);
+                }
+            });
             form.on('checkbox', function (data) {
                 //data.elem.closest('.layui-form-item')
                 if (_json.tag === 'checkbox') {
@@ -1871,39 +1912,81 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     that.renderForm();
 
                 } else if (_key === 'dateformat') {
-                    var _html = '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format('dateDefaultValue' + _json.tag + _json.id);
-                    $('#dateDefaultValue' + _json.id + ' .layui-input-block').empty();
-                    $('#dateDefaultValue' + _json.id + ' .layui-input-block').append(_html);
-                    _json.dateformat = data.value;
-                    var dateClass = laydate.render({
-                        elem: '#dateDefaultValue' + _json.tag + _json.id,
-                        type: _json.datetype,
-                        format: _json.dateformat,
-                        value: new Date(),
-                        done: function(value, date, endDate){
-                            _json.dateDefaultValue = value;
-                            that.components[_json.tag].update(_json);
-                        }
-                    });
-                    _json.dateDefaultValue = dateClass.config.elem[0].innerText;
-                    that.components[_json.tag].update(_json);
+                    if (_json.tag === 'date') {
+                        var _html = '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format('dateDefaultValue' + _json.tag + _json.id);
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').empty();
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').append(_html);
+                        _json.dateformat = data.value;
+                        var dateClass = laydate.render({
+                            elem: '#dateDefaultValue' + _json.tag + _json.id,
+                            type: _json.datetype,
+                            format: _json.dateformat,
+                            value: new Date(),
+                            done: function(value, date, endDate){
+                                _json.dateDefaultValue = value;
+                                that.components[_json.tag].update(_json);
+                            }
+                        });
+                        _json.dateDefaultValue = dateClass.config.elem[0].innerText;
+                        that.components[_json.tag].update(_json);
+                    }
+                    if (_json.tag === 'dateRange') {
+                        var _html = '<div id="{0}" class="layui-input icon-date widget-date"></div>'.format('dateDefaultValue' + _json.tag + _json.id);
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').empty();
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').append(_html);
+                        _json.dateformat = data.value;
+                        var _v = layui.util.toDateString(new Date(), _json.dateformat) + " - " + layui.util.toDateString(new Date(), _json.dateformat);
+                        laydate.render({
+                            elem: '#dateRangeDefaultValue' + _json.tag + _json.id,
+                            type: _json.datetype,
+                            format: _json.dateformat,
+                            value:  _v,
+                            range:"-",
+                            done: function(value, date, endDate){
+                                _json.dateRangeDefaultValue = value;
+                                that.components[_json.tag].update(_json);
+                            }
+                        });
+                        _json.dateRangeDefaultValue = _v;
+                        that.components[_json.tag].update(_json);
+                    }
                 } else if (_key === 'datetype') {
-                    var _html = '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format('dateDefaultValue' + _json.tag + _json.id);
-                    $('#dateDefaultValue' + _json.id + ' .layui-input-block').empty();
-                    $('#dateDefaultValue' + _json.id + ' .layui-input-block').append(_html);
-                    _json.datetype = data.value;
-                    var dateClass = laydate.render({
-                        elem: '#dateDefaultValue' + _json.tag + _json.id,
-                        type: _json.datetype,
-                        format: _json.dateformat,
-                        value: new Date(),
-                        done: function(value, date, endDate){
-                            _json.dateDefaultValue = value;
-                            that.components[_json.tag].update(_json);
-                        }
-                    });
-                    _json.dateDefaultValue = dateClass.config.elem[0].innerText;
-                    that.components[_json.tag].update(_json);
+                    if (_json.tag === 'date') {
+                        var _html = '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format('dateDefaultValue' + _json.tag + _json.id);
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').empty();
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').append(_html);
+                        _json.datetype = data.value;
+                        var dateClass = laydate.render({
+                            elem: '#dateDefaultValue' + _json.tag + _json.id,
+                            type: _json.datetype,
+                            format: _json.dateformat,
+                            value: new Date(),
+                            done: function(value, date, endDate){
+                                _json.dateDefaultValue = value;
+                                that.components[_json.tag].update(_json);
+                            }
+                        });
+                        _json.dateDefaultValue = dateClass.config.elem[0].innerText;
+                        that.components[_json.tag].update(_json);
+                    }
+                    if (_json.tag === 'dateRange') {
+                        var _html = '<div id="{0}" class="layui-input icon-date widget-date"></div>'.format('dateDefaultValue' + _json.tag + _json.id);
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').empty();
+                        $('#dateDefaultValue' + _json.id + ' .layui-input-block').append(_html);
+                        _json.datetype = data.value;
+                        laydate.render({
+                            elem: '#dateRangeDefaultValue' + _json.tag + _json.id,
+                            type: _json.datetype,
+                            format: _json.dateformat,
+                            value: _json.dateRangeDefaultValue,
+                            range:"-",
+                            done: function(value, date, endDate){
+                                _json.dateRangeDefaultValue = value;
+                                that.components[_json.tag].update(_json);
+                            }
+                        });
+                        that.components[_json.tag].update(_json);
+                    }
                 }else if (_key === 'required') {
                     _json.expression = data.value;
                     that.components[_json.tag].update(_json);
@@ -2642,25 +2725,21 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 });
             });
             $('.saveJson').on('click', function () {
-                window.localStorage.setItem('layui_form_json', JSON.stringify(options.data));
-                //iframe窗
-                layer.open({
-                    type: 2,
-                    title: '保存表单',
-                    btn: ['关闭'], //可以无限个按钮
-                    btn1: function (index, layero) {
-                        layer.close(index);
-                    },
-                    closeBtn: 1, //不显示关闭按钮
-                    shade: [0],
-                    area: ['100%', '100%'],
-                    offset: 'auto', //右下角弹出
-                    anim: 2,
-                    content: ['/static/assets/preview.html', 'yes'], //iframe的url，no代表不显示滚动条
-                    end: function () { //此处用于演示
-                        //加载结束
+                //window.localStorage.setItem('layui_form_json', JSON.stringify(options.data));
+                CoreUtil.sendPut("/activiti-form/setActivitiForm", {"id":$("#fromId").val(),"formData":JSON.stringify(options.data)}, function (res) {
+                    if (res.code === 0) {
+                        layer.msg(res.msg, {icon: 1});
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
                     }
-                });
+                    setTimeout(function(){
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);//关闭弹出层
+                        parent.location.reload();
+                    }, 1000);
+                })
+                //var index = parent.layer.getFrameIndex(window.name);
+                //parent.layer.close(index);
             });
             that.renderForm();
         };
@@ -2715,6 +2794,21 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         min: item.dataMinValue,
                         max: item.dataMaxValue,
                     });
+                }else if (item.tag === 'dateRange') {
+                    laydate.render({
+                        elem: '#' + item.tag + item.id,
+                        type: item.datetype,
+                        format: item.dateformat,
+                        min: item.dataMinValue,
+                        max: item.dataMaxValue,
+                        range: ['#start-' + item.tag + item.id, '#end-' + item.tag + item.id]
+                    });
+                    if (item.dateRangeDefaultValue !== null && item.dateRangeDefaultValue !== ""
+                        && item.dateRangeDefaultValue !== undefined) {
+                        var split = item.dateRangeDefaultValue.split(" - ");
+                        $('#start-' + item.tag + item.id).val(split[0]);
+                        $('#end-' + item.tag + item.id).val(split[1]);
+                    }
                 } else if (item.tag === 'rate') {
                     rate.render({
                         elem: '#' + item.tag + item.id,
@@ -3050,6 +3144,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             var ins = new Class(options);
             return thisIns.call(ins);
         };
+
+
 
 
         //加载组件所需样式
