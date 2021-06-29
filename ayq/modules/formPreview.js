@@ -33,6 +33,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             , layedit = layui.layedit
             , formField = layui.formField
             , hint = layui.hint
+            , iceEditorObjects = {}
             , guid = function () {
                 var d = new Date().getTime();
                 if (window.performance && typeof window.performance.now === "function") {
@@ -144,7 +145,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
 
             , thisIns = function () {
                 var that = this
-
                     , options = that.config;
                 return { reload: function (options) {
                         that.reload.call(that
@@ -153,6 +153,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         return options || null;
                     },getData : function () {
                         return options.data || null;
+                    },geticeEditorObjects:function () {
+                        return iceEditorObjects || null;
                     }
                 }
             }
@@ -207,6 +209,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
         Class.prototype.config = {
             version: "1.0.0"
             , formName: "表单示例"
+            , Author: "谁家没一个小强"
             , formId: "id"
             , generateId: 0
             , data: []
@@ -712,7 +715,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _html = '<div id="{0}" class="layui-form-item layui-form-text {2}" style="width: {4}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index,json.width);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block">';
-                    _html += '<textarea id="{0}" style="display: none; "></textarea>'.format(json.tag + json.id);
+                    _html += '<div id="{0}"></div>'.format(json.tag + json.id);
                     _html += '</div>';
                     // if(selected){
                     // 	_html +='<div class="widget-view-action"><i class="layui-icon layui-icon-file"></i><i class="layui-icon layui-icon-delete"></i></div><div class="widget-view-drag"><i class="layui-icon layui-icon-screen-full"></i></div>';
@@ -750,7 +753,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         colClass = 'layui-col-md2';
                     }
                     for (var i = 0; i < json.columns.length; i++) {
-                        _html += '<div class="{2} widget-col-list column{0}" data-index="{0}" data-parentindex="{1}">'.format(i, json.index, colClass);
+                        _html += '<div class="{2} widget-col-list column{3}{0}" data-index="{0}" data-parentindex="{1}">'.format(i, json.index, colClass,json.id);
                         //some html 
                         _html += '</div>';
                     }
@@ -867,8 +870,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 if (item.tag === 'grid') {
                     $.each(item.columns, function (index2, item2) {
                         //获取当前的 DOM 对象
-                        var elem2 = $('#' + item.id + ' .widget-col-list').filter('.column' + index2);
                         if (item2.list.length > 0) {
+                            var elem2 = $('#' + item.id + ' .widget-col-list.column' + item.id + index2);
                             that.renderComponents(item2.list, elem2);
                         }
                     });
@@ -958,9 +961,14 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         }
                     });
                 } else if (item.tag === 'editor') {
-                    layedit.build(item.tag + item.id, {
-                        height: item.height
-                    }); //建立编辑器
+                    var e = new ice.editor(item.tag + item.id);
+                    e.width=item.width;   //宽度
+                    e.height=item.height;  //高度
+                    e.uploadUrl=item.uploadUrl; //上传文件路径
+                    e.disabled=item.disabled;
+                    e.menu = item.menu;
+                    e.create();
+                    iceEditorObjects[item.tag + item.id] = e;
                 } else if (item.tag === 'carousel') {
                     carousel.render({
                         elem: '#' + item.tag + item.id,

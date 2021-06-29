@@ -343,10 +343,10 @@ layui.define(['layer'], function (exports) {
             clearable: true,
             maxlength: null,
             showWordLimit: false,
-            tool: [],
-            hideTool: [],
-            height: "120px",
-            uploadImage: {url: '/upload/', type: 'post'},
+            menu: ['backColor', 'fontSize', 'foreColor', 'bold', 'italic', 'underline', 'strikeThrough', 'justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent', 'insertOrderedList', 'insertUnorderedList', 'superscript', 'subscript', 'createLink', 'unlink', 'hr', 'face','table', 'files', 'music', 'video', 'insertImage', 'removeFormat', 'code', 'line'],
+            height: "200px",
+            uploadUrl: '/upload/',
+            disabled:false,
             document: ''
         },
         grid:{
@@ -366,16 +366,20 @@ layui.define(['layer'], function (exports) {
             ]
         }
         ,c1:{
-            name:"输入型组件",
-            list:['input','password','textarea','editor']
+            name:"输入型组件(基于layui)",
+            list:['input','password','textarea']
         }
         ,c2:{
-            name:"选择型组件",
+            name:"选择型组件(基于layui)",
             list:['select','radio','checkbox','switch','slider','date','rate','carousel','colorpicker','image','file','dateRange']
         }
         ,c3:{
-            name:"布局型组件",
+            name:"布局型组件(基于layui)",
             list:['grid']
+        }
+        ,c4:{
+            name:"输入型组件(外部扩展)",
+            list:['editor']
         }
     };
     exports('formField', field);
