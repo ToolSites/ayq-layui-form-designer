@@ -10,19 +10,16 @@
 
 1. 本项目基于Layui、Jquery、Sortable
 2. 项目已经基本实现了拖动布局，父子布局
-3. 项目实现了大部分基于Layui的Form表单控件布局，包括输入框、编辑器、下拉、单选、单选组、多选组、日期、滑块、评分、轮播、图片、颜色选择、图片上传、文件上传、时间范围
+3. 项目实现了大部分基于Layui的Form表单控件布局，包括输入框、编辑器、下拉、单选、单选组、多选组、日期、滑块、评分、轮播、图片、颜色选择、图片上传、文件上传、日期范围、排序文本框、图标选择器、cron表达式
 
 #### 开发计划
 
 1.  支持layui表单组件
 2.  支持layui的扩展组件
-3.  支持引入数据源
+3.  支持通过formDesigner对象的方法获取填写表单的数据或者回显表单数据
 4.  支持代码自动生成
-5.  支持定制布局和背景
-
-#### 开发说明
-
-    希望有bug及时给我反馈，我会根据问题进行完善，也希望小伙伴也可以加入进来一起完善，一起开发。
+5.  支持通过url获取远程数据动态显示组件（如下拉框、编辑器、图片等）
+6.  支持定制布局和背景
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0524/161635_1627108b_4776207.png "13.PNG")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0527/094341_983939d5_4776207.png "14.PNG")
@@ -41,103 +38,11 @@ render.reload(options)
 
 //获取相关配置信息
 render.getOptions() 
-{
-    "version": "1.0.0",
-    "formName": "表单示例",
-    "formId": "id",
-    "generateId": 1,
-    "data": [
-        {
-            "id": "input_1",
-            "index": 0,
-            "label": "单行文本",
-            "tag": "input",
-            "tagIcon": "input",
-            "placeholder": "请输入",
-            "defaultValue": null,
-            "labelWidth": null,
-            "width": "100%",
-            "clearable": true,
-            "maxlength": null,
-            "showWordLimit": false,
-            "readonly": false,
-            "disabled": false,
-            "required": true,
-            "expression": "",
-            "document": ""
-        }
-    ],
-    "dataSource": {},
-    "htmlCode": {
-        "css": "",
-        "html": "",
-        "script": ""
-    },
-    "elem": {
-        "0": {},
-        "length": 1,
-        "context": {
-            "location": {
-                "ancestorOrigins": {},
-                "href": "http://localhost:8083/activitiManager/getFormDesigner/1402562618899579000?authorization=178aa01f-32b9-450e-96a4-e6e531dcef36%231",
-                "origin": "http://localhost:8083",
-                "protocol": "http:",
-                "host": "localhost:8083",
-                "hostname": "localhost",
-                "port": "8083",
-                "pathname": "/activitiManager/getFormDesigner/1402562618899579000",
-                "search": "?authorization=178aa01f-32b9-450e-96a4-e6e531dcef36%231",
-                "hash": ""
-            },
-            "jQuery112305065006406520325": 1
-        },
-        "selector": "#formdesigner"
-    },
-    "id": "formdesigner",
-    "selectItem": {
-        "id": "input_1",
-        "index": 0,
-        "label": "单行文本",
-        "tag": "input",
-        "tagIcon": "input",
-        "placeholder": "请输入",
-        "defaultValue": null,
-        "labelWidth": null,
-        "width": "100%",
-        "clearable": true,
-        "maxlength": null,
-        "showWordLimit": false,
-        "readonly": false,
-        "disabled": false,
-        "required": true,
-        "expression": "",
-        "document": ""
-    }
-}
 
-//获取表单数据
+//获取表单设计数据
 render.getData()
-[
-    {
-        "id": "input_1",
-        "index": 0,
-        "label": "单行文本",
-        "tag": "input",
-        "tagIcon": "input",
-        "placeholder": "请输入",
-        "defaultValue": null,
-        "labelWidth": null,
-        "width": "100%",
-        "clearable": true,
-        "maxlength": null,
-        "showWordLimit": false,
-        "readonly": false,
-        "disabled": false,
-        "required": true,
-        "expression": "",
-        "document": ""
-    }
-]
+//获取外部编辑器对象
+render.geticeEditorObjects()
 ```
 
 #### 基础参数
@@ -188,8 +93,20 @@ render.getData()
     2. 展示页面提交参数优化
 - 2021-06-24 
     1. 引入iceEditor富文本编辑组件
+- 2021-06-30 
+    1. 加入iceEditor富文本编辑组件
+    2. 解决一行多列样式异常问题
+    3. 结局一行多列嵌套问题
+    4. 优化富文本参数无法获取问题
+- 2021-07-01 
+    1. 加入排序文本框组件
+    2. 加入图标选择器组件
+    3. 加入Cron表达式组件
+    4. 优化富文本编辑器（菜单编辑本地直接访问会出现跨域问题，放入nginx、tomcat等容器就会正常）
+    5. 发布V1.0.0
 
-#### 声明：开发和编写文档不易，要求不多，给个Star支持一下，需要一些开发动力，嘿嘿
+
+#### 声明：基本代码已经上传，可以在上面玩一玩，测试一下BUG，希望大家提出问题，也希望大家参与进来，提供一些有趣的组件，现在发布第一版本V1.0.0，开发和编写文档不易，要求不多，给个Star支持一下，需要一些开发动力，嘿嘿
 
 #### 特技
 
