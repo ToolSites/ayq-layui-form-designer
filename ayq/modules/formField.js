@@ -304,17 +304,17 @@ layui.define(['layer'], function (exports) {
             options: [
                 {
                     text: 'banner1',
-                    value: '/static/images/banner1.PNG',
+                    value: './ayq/images/banner1.PNG',
                     checked: true,
                 },
                 {
                     text: 'banner2',
-                    value: '/static/images/banner2.PNG',
+                    value: './ayq/images/banner2.PNG',
                     checked: false,
                 },
                 {
                     text: 'banner3',
-                    value: '/static/images/banner3.PNG',
+                    value: './ayq/images/banner3.PNG',
                     checked: false,
                 },
             ]

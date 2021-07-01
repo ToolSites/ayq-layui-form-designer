@@ -13,7 +13,7 @@
  + 本项目是一个基于layui表单组件的表单设计器
  + 1.本项目基于Layui、Jquery、Sortable
  + 2.项目已经基本实现了拖动布局，父子布局
- + 3.项目实现了大部分基于Layui的Form表单控件布局，包括输入框、编辑器、下拉、单选、单选组、多选组、日期、滑块、评分、轮播、图片、颜色选择、图片上传、文件上传
+ + 3.项目实现了大部分基于Layui的Form表单控件布局，包括输入框、编辑器、下拉、单选、单选组、多选组、日期、滑块、评分、轮播、图片、颜色选择、图片上传、文件上传、日期范围、排序文本框、图标选择器、cron表达式
  +------------------------------------------------------------------------------------+
  */
 layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField','numberInput',"iconPicker", "cron"]
@@ -1908,7 +1908,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         colClass = 'layui-col-md2';
                     }
                     for (var i = 0; i < json.columns.length; i++) {
-                        _html += '<div class="{2} widget-col-list column{3}{0}" data-index="{0}" data-parentindex="{1}">'.format(i, json.index, colClass,json.id);
+                        _html += '<div class="{2} widget-col-list column{0}" data-index="{0}" data-parentindex="{1}">'.format(i, json.index, colClass);
                         //some html 
                         _html += '</div>';
                     }
@@ -2151,7 +2151,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     area: ['80%', '80%'],
                     offset: 'auto', //右下角弹出
                     anim: 2,
-                    content: ['/static/assets/editorMenu.html', 'yes'], //iframe的url，no代表不显示滚动条
+                    content: ['./editorMenu.html', 'yes'], //iframe的url，no代表不显示滚动条
                     success:function (layero,index) {
                         var iframe = window['layui-layer-iframe' + index];
                         iframe.child(iceEditMenus)
@@ -3095,7 +3095,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     area: ['100%', '100%'],
                     offset: 'auto', //右下角弹出 
                     anim: 2,
-                    content: ['/static/assets/preview.html', 'yes'], //iframe的url，no代表不显示滚动条
+                    content: ['./preview.html', 'yes'], //iframe的url，no代表不显示滚动条
                     end: function () { //此处用于演示
                         //加载结束
                     }
@@ -3143,9 +3143,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 if (item.tag === 'grid') {
                     that.bindGridSortEvent(item);
                     $.each(item.columns, function (index2, item2) {
-                        //获取当前的 DOM 对象
+                        var elem2 = $('#' + item.id + ' .widget-col-list').filter('.column' + index2);
                         if (item2.list.length > 0) {
-                            var elem2 = $('#' + item.id + ' .widget-col-list.column' + item.id + index2);
                             that.renderComponents(item2.list, elem2);
                         }
                     });
