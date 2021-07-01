@@ -166,6 +166,51 @@ layui.define(['layer'], function (exports) {
             required: true,
             document: '',
         },
+        numberInput: {
+            id:'-1',
+            index:'-1',
+            label: "排序文本框",
+            tag: "numberInput",
+            tagIcon: 'numberInput',
+            labelWidth: null,
+            width:"100%",
+            defaultValue: 0,
+            maxValue: 100,
+            minValue: 0,
+            stepValue: 1,
+            disabled: false,
+            document: '',
+        },
+        iconPicker: {
+            id:'-1',
+            index:'-1',
+            label: "图标选择器",
+            tag: "iconPicker",
+            tagIcon: 'iconPicker',
+            labelWidth: null,
+            width:"100%",
+            defaultValue: '',
+            iconPickerSearch: true,
+            iconPickerPage: true,
+            iconPickerLimit: 12,
+            iconPickerCellWidth: '43px',
+            disabled: false,
+            document: '',
+        },
+        cron: {
+            id:'-1',
+            index:'-1',
+            label: "Cron表达式",
+            tag: "cron",
+            tagIcon: 'cron',
+            placeholder: "请输入cron表达式,如:0 0 12 * * ?",
+            labelWidth: null,
+            width:"100%",
+            defaultValue: '* * * * * ?',
+            cronUrl: '',
+            disabled: false,
+            document: '',
+        },
         date: {
             id:'-1',
             index:'-1',
@@ -259,17 +304,17 @@ layui.define(['layer'], function (exports) {
             options: [
                 {
                     text: 'banner1',
-                    value: './ayq/images/banner1.PNG',
+                    value: '/static/images/banner1.PNG',
                     checked: true,
                 },
                 {
                     text: 'banner2',
-                    value: './ayq/images/banner2.PNG',
+                    value: '/static/images/banner2.PNG',
                     checked: false,
                 },
                 {
                     text: 'banner3',
-                    value: './ayq/images/banner3.PNG',
+                    value: '/static/images/banner3.PNG',
                     checked: false,
                 },
             ]
@@ -376,11 +421,17 @@ layui.define(['layer'], function (exports) {
         ,c3:{
             name:"布局型组件(基于layui)",
             list:['grid']
+        },
+        c4:{
+            name:"扩展组件(基于layui)",
+            list:['numberInput','iconPicker','cron']
         }
-        ,c4:{
-            name:"输入型组件(外部扩展)",
+        ,
+        c5:{
+            name:"扩展组件(外部)",
             list:['editor']
         }
+
     };
     exports('formField', field);
 
