@@ -1,7 +1,7 @@
 # ayq-layui-form-designer
 
 #### 介绍
-基于layui的表单设计器,前期设计基于 [fwr-layui-formdesigner](http://https://gitee.com/fishpro/fwr-layui-formdesigner)，因fwr-layui-formdesigner存在很多问题，不在维护，即基于这个上重新做了开发
+基于layui的表单设计器,前期设计基于 [fwr-layui-formdesigner](https://gitee.com/fishpro/fwr-layui-formdesigner)，因fwr-layui-formdesigner存在很多问题，不在维护，即基于这个上重新做了开发
 
 #### 声明：基本代码已经上传，可以在上面玩一玩，测试一下BUG，希望大家提出问题，也希望大家参与进来，提供一些有趣的组件，现在发布第一版本V1.0.0，开发和编写文档不易，要求不多，给个Star支持一下，需要一些开发动力，嘿嘿
 
