@@ -3,3 +3,15 @@
     width : 90%;
     position: absolute!important;
 }
+.custom-lg{
+    margin: -3px 0px 0px 10px;
+}
+.custom-zc{
+    margin: 0px 0px 0px 10px;
+}
+.custom-sm{
+    margin: 5px 0px 0px 10px;
+}
+.custom-xs{
+    margin: 10px 0px 0px 10px;
+}

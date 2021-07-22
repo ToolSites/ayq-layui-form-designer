@@ -181,6 +181,32 @@ layui.define(['layer'], function (exports) {
             disabled: false,
             document: '',
         },
+        labelGeneration: {
+            id:'-1',
+            index:'-1',
+            label: "标签组件",
+            tag: "labelGeneration",
+            tagIcon: 'labelGeneration',
+            labelWidth: null,
+            width:"100%",
+            isEnter: false,
+            document: '',
+        },
+        bottom: {
+            id:'-1',
+            index:'-1',
+            label: "按钮组件",
+            tag: "bottom",
+            tagIcon: 'bottom',
+            labelWidth: null,
+            buttonIcon:"",
+            buttonVlaue:"按钮",
+            buttonType:"",
+            buttonSize:"",
+            isLabel:true,
+            disabled: false,
+            document: '',
+        },
         iconPicker: {
             id:'-1',
             index:'-1',
@@ -420,11 +446,11 @@ layui.define(['layer'], function (exports) {
         }
         ,c3:{
             name:"布局型组件(基于layui)",
-            list:['grid']
+            list:['grid','bottom']
         },
         c4:{
             name:"扩展组件(基于layui)",
-            list:['numberInput','iconPicker','cron']
+            list:['numberInput','iconPicker','cron','labelGeneration']
         }
         ,
         c5:{

@@ -13,10 +13,10 @@
  + 本项目是一个基于layui表单组件的表单设计器
  + 1.本项目基于Layui、Jquery、Sortable
  + 2.项目已经基本实现了拖动布局，父子布局
- + 3.项目实现了大部分基于Layui的Form表单控件布局，包括输入框、编辑器、下拉、单选、单选组、多选组、日期、滑块、评分、轮播、图片、颜色选择、图片上传、文件上传、日期范围、排序文本框、图标选择器、cron表达式
+ + 3.项目实现了大部分基于Layui的Form表单控件布局，包括输入框、编辑器、下拉、单选、单选组、多选组、日期、滑块、评分、轮播、图片、颜色选择、图片上传、文件上传
  +------------------------------------------------------------------------------------+
  */
-layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField','numberInput',"iconPicker", "cron"]
+layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField','numberInput',"iconPicker", "cron",'labelGeneration']
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
@@ -36,6 +36,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             , numberInput = layui.numberInput
             , iconPicker = layui.iconPicker
             , cron = layui.cron
+            , labelGeneration = layui.labelGeneration
             , iceEditorObjects = {}
             , guid = function () {
                 var d = new Date().getTime();
@@ -127,9 +128,16 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 iconPickerCellWidth:"图标宽度",
                 cron:"Cron表达式",
                 cronUrl:"运行路径",
-
+                labelGeneration:"标签组件",
+                isEnter:"是否回车",
+                buttonIcon:"按钮图标",
+                buttonType:"按钮类型",
+                isLabel:"显示标签",
+                buttonSize:"组件尺寸",
+                bottom:"按钮组件",
+                buttonVlaue:"按钮文字",
             }
-            , expressions = [{text: '默认', value: ''}
+            , expressions = [{text: '默认', value: ""}
                 , {text: '数字', value: 'number'}
                 , {text: '邮箱', value: 'email'}
                 , {text: '手机', value: 'phone'}
@@ -148,6 +156,15 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 , {text: '时间选择器', value: 'time'}
                 , {text: '日期选择器', value: 'date'}
                 , {text: '日期时间选择器', value: 'datetime'}]
+            , buttonTypes = [{text: '原始', value: 'layui-btn-primary'}
+                , {text: '默认', value: ""}
+                , {text: '百搭', value: 'layui-btn-normal'}
+                , {text: '暖色', value: 'layui-btn-warm'}
+                , {text: '警告', value: ' layui-btn-danger'}]
+            , buttonSizes = [{text: '大型', value: 'layui-btn-lg'}
+                , {text: '默认', value: ""}
+                , {text: '小型', value: 'layui-btn-sm'}
+                , {text: '迷你', value: 'layui-btn-xs'}]
             , dateformats = ["yyyy年MM月", "yyyy-MM-dd", "dd/MM/yyyy", "yyyyMMdd", "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH时mm分ss秒"]
             , iceEditMenus = [
                 {value:'backColor',text:'字体背景颜色'},{value:'fontSize',text:'字体大小'},{value:'foreColor',text:'字体颜色'},{value:'bold',text:'粗体'},
@@ -180,7 +197,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         _html += '</div>';
                     } else if (key === 'readonly' || key === 'disabled' || key === 'required' || key === 'half' || key === "text" || key === "autoplay"
                         || key === "full" || key === "verification" || key === 'autoplay' || key === 'isInput' || key === 'expression' || key === 'iconPickerSearch'
-                        || key === 'iconPickerPage') {
+                        || key === 'iconPickerPage' || key === 'isEnter' || key === 'isLabel') {
                         var yes = "是";
                         var no = "否";
                         if (key === 'isInput') {
@@ -202,6 +219,14 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         if (key === 'readonly') {
                             yes = "只读";
                             no = "可写";
+                            _html += '<div class="layui-form-item" >';
+                            _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
+                            _html += '  <div class="layui-input-block">';
+                            _html += '    <input type="checkbox" id="{1}" {0} name="{1}" lay-skin="switch" lay-text="{2}|{3}">'.format(json[key] ? 'checked' : '', key, yes, no);
+                            _html += '  </div>';
+                            _html += '</div>';
+                        }
+                        if (key === 'isEnter' || key === 'isLabel') {
                             _html += '<div class="layui-form-item" >';
                             _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
                             _html += '  <div class="layui-input-block">';
@@ -247,7 +272,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         }
                     } else if (key === 'defaultValue' || key === 'label' || key === 'height' || key === 'placeholder' || key === 'document'
                         || key === 'minValue' || key === 'maxValue' || key === 'stepValue' || key === 'rateLength' || key === 'width'
-                        || key === 'iconPickerLimit' || key === 'iconPickerCellWidth') {
+                        || key === 'iconPickerLimit' || key === 'iconPickerCellWidth'|| key === 'buttonVlaue') {
                             _html += '<div class="layui-form-item" >';
                             _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
                             _html += '  <div class="layui-input-block">';
@@ -421,25 +446,72 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         _html += '</select>'
                         _html += '</div>';
                         _html += '</div>';
+                    }else if (key === 'buttonType') {
+                        //处理
+                        _html += '<div class="layui-form-item" >';
+                        _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
+                        _html += '  <div class="layui-input-block">';
+                        _html += '<select name="{0}" lay-verify="required">'.format(key);
+                        for (var i = 0; i < buttonTypes.length; i++) {
+                            if (buttonTypes[i].value === json.buttonType) {
+                                if (buttonTypes[i].value === "") {
+                                    _html += ' <option selected="">{0}</option>'.format(buttonTypes[i].text);
+                                }else {
+                                    _html += ' <option value="{1}" selected="">{0}</option>'.format(buttonTypes[i].text, buttonTypes[i].value);
+                                }
+                            }else {
+                                _html += ' <option value="{1}">{0}</option>'.format(buttonTypes[i].text, buttonTypes[i].value);
+                            }
+                        }
+                        _html += '</select>'
+                        _html += '</div>';
+                        _html += '</div>';
+                    }else if (key === 'buttonSize') {
+                        //处理
+                        _html += '<div class="layui-form-item" >';
+                        _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
+                        _html += '  <div class="layui-input-block">';
+                        _html += '<select name="{0}" lay-verify="required">'.format(key);
+                        for (var i = 0; i < buttonSizes.length; i++) {
+                            if (buttonSizes[i].value === json.buttonSize) {
+                                if (buttonSizes[i].value === "") {
+                                    _html += ' <option selected="">{0}</option>'.format(buttonSizes[i].text);
+                                }else {
+                                    _html += ' <option value="{1}" selected="">{0}</option>'.format(buttonSizes[i].text, buttonSizes[i].value);
+                                }
+                            }else {
+                                _html += ' <option value="{1}">{0}</option>'.format(buttonSizes[i].text, buttonSizes[i].value);
+                            }
+                        }
+                        _html += '</select>'
+                        _html += '</div>';
+                        _html += '</div>';
                     } else if (key === 'dataMaxValue' || key === 'dataMinValue') {
-                        _html += '<div id="{0}" class="layui-form-item" ">'.format(key + json.id);
+                        _html += '<div id="{0}" class="layui-form-item">'.format(key + json.id);
                         _html += '<label class="layui-form-label">{0}:</label>'.format(lang[key]);
                         _html += '<div class="layui-input-block"">';
                         _html += '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format(key + json.tag + json.id);
                         _html += '</div>';
                         _html += '</div>';
                     } else if (key === 'dateDefaultValue') {
-                        _html += '<div id="{0}" class="layui-form-item" ">'.format(key + json.id);
+                        _html += '<div id="{0}" class="layui-form-item">'.format(key + json.id);
                         _html += '<label class="layui-form-label">{0}:</label>'.format(lang[key]);
                         _html += '<div class="layui-input-block"">';
                         _html += '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format(key + json.tag + json.id);
                         _html += '</div>';
                         _html += '</div>';
                     }else if (key === 'dateRangeDefaultValue') {
-                        _html += '<div id="{0}" class="layui-form-item" ">'.format(key + json.id);
+                        _html += '<div id="{0}" class="layui-form-item">'.format(key + json.id);
                         _html += '<label class="layui-form-label">{0}:</label>'.format(lang[key]);
                         _html += '<div class="layui-input-block"">';
                         _html += '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format(key + json.tag + json.id);
+                        _html += '</div>';
+                        _html += '</div>';
+                    }else if (key === 'buttonIcon') {
+                        _html += '<div id="{0}" class="layui-form-item" ">'.format(key + json.id);
+                        _html += '<label class="layui-form-label">{0}:</label>'.format(lang[key]);
+                        _html += '<div class="layui-input-block"">';
+                        _html += '<div id="{0}" class="layui-input icon-date widget-date" style="line-height: 40px;"></div>'.format(json.tag + json.id + "property");
                         _html += '</div>';
                         _html += '</div>';
                     }
@@ -670,8 +742,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         return json[i - 1];
                     }
                     break;
-                }
-                {
+                }else {
                     if (json[i].tag === 'grid') {
                         for (var j = 0; j < json[i].columns.length; j++) {
                             if (json[i].columns[j].list.length > 0) {
@@ -792,6 +863,97 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 jsonData: function (id, index, columncount) {
                     //分配一个新的ID
                     var _json = JSON.parse(JSON.stringify(formField.input));
+                    _json.id = id == undefined ? autoId(_json.tag) : id;
+                    _json.index = index;
+                    return _json;
+                },
+                /* 根据 json 对象显示对应的属性 */
+                property: function (json) {
+                    $('#columnProperty').empty();
+                    var _html = '';
+                    _html = renderCommonProperty(json);//获取通用属性HTML字符串
+                    //处理特殊字符串
+                    for (var key in json) {
+                        if (key === 'index') {
+                            continue;
+                        }
+                    }
+                    $('#columnProperty').append(_html);
+                }
+            },
+            bottom: {
+                /**
+                 * 根据json对象生成html对象
+                 * @param {object} json
+                 * @param {boolean} selected true 表示选择当前
+                 * */
+                render: function (json, selected) {
+                    if (selected === undefined) {
+                        selected = false;
+                    }
+                    var _coustomCss = "";
+                    if (json.buttonSize === "layui-btn-lg") {
+                        _coustomCss = "custom-lg";
+                    }
+                    if (json.buttonSize === "") {
+                        _coustomCss = "custom-zc";
+                    }
+                    if (json.buttonSize === "layui-btn-sm") {
+                        _coustomCss = "custom-sm";
+                    }
+                    if (json.buttonSize === "layui-btn-xs") {
+                        _coustomCss = "custom-xs";
+                    }
+                    var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    if (json.isLabel) {
+                        _html += '<label class="layui-form-label">{0}:</label>'.format(json.label);
+                    }
+                    _html += '<div class="layui-input-block" style="margin-left: 0px;">';
+                    if (json.disabled) {
+                        _html += '<button id="{0}" type="button" class="layui-btn {1} layui-btn-disabled {2}"><i class="layui-icon {3}"></i> {4}</button>'.format(json.id + json.tag, json.buttonSize,_coustomCss ,json.buttonIcon,json.buttonVlaue);
+                    }else {
+                        _html += '<button id="{0}" type="button" class="layui-btn {1} {2} {3}"><i class="layui-icon {4}"></i> {5}</button>'.format(json.id + json.tag, json.buttonSize, json.buttonType,_coustomCss ,json.buttonIcon,json.buttonVlaue);
+                    }
+                    _html += '</div>';
+                    _html += '</div>';
+                    return _html;
+                },
+                update: function (json) {
+                    if (json.isLabel) {
+                        if ($('#' + json.id).find("label").length === 0) {
+                            $('#' + json.id).prepend('<label class="layui-form-label">{0}:</label>'.format(json.label));
+                        }
+                    }else {
+                        $('#' + json.id + ' .layui-form-label').remove();
+                        $('#' + json.id + ' .layui-input-block').css("margin-left","0px");
+                    }
+                    $('#' + json.id + ' .layui-input-block').empty();
+                    var _html = '';
+                    var _coustomCss = "";
+                    if (json.buttonSize === "layui-btn-lg") {
+                        _coustomCss = "custom-lg";
+                    }
+                    if (json.buttonSize === "") {
+                        _coustomCss = "custom-zc";
+                    }
+                    if (json.buttonSize === "layui-btn-sm") {
+                        _coustomCss = "custom-sm";
+                    }
+                    if (json.buttonSize === "layui-btn-xs") {
+                        _coustomCss = "custom-xs";
+                    }
+                    //重绘设计区改id下的所有元素
+                    if (json.disabled) {
+                        _html += '<button id="{0}" type="button" class="layui-btn {1} layui-btn-disabled {2}"><i class="layui-icon {3}"></i> {4}</button>'.format(json.id + json.tag, json.buttonSize,_coustomCss ,json.buttonIcon,json.buttonVlaue);
+                    }else {
+                        _html += '<button id="{0}" type="button" class="layui-btn {1} {2} {3}"><i class="layui-icon {4}"></i> {5}</button>'.format(json.id + json.tag, json.buttonSize, json.buttonType,_coustomCss ,json.buttonIcon,json.buttonVlaue);
+                    }
+                    $('#' + json.id + ' .layui-input-block').append(_html);
+                },
+                /* 获取对象 */
+                jsonData: function (id, index, columncount) {
+                    //分配一个新的ID
+                    var _json = JSON.parse(JSON.stringify(formField.bottom));
                     _json.id = id == undefined ? autoId(_json.tag) : id;
                     _json.index = index;
                     return _json;
@@ -1013,6 +1175,61 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 jsonData: function (id, index, columncount) {
                     //分配一个新的ID
                     var _json = JSON.parse(JSON.stringify(formField.numberInput));
+                    _json.id = id == undefined ? autoId(_json.tag) : id;
+                    _json.index = index;
+                    return _json;
+                },
+                /* 根据 json 对象显示对应的属性 */
+                property: function (json) {
+                    $('#columnProperty').empty();
+                    var _html = '';
+                    _html = renderCommonProperty(json);//获取通用属性HTML字符串
+                    //处理特殊字符串
+                    for (var key in json) {
+                        if (key === 'index') {
+                            continue;
+                        }
+                    }
+                    $('#columnProperty').append(_html);
+                }
+            },
+            labelGeneration: {
+                /**
+                 * 根据json对象生成html对象
+                 * @param {object} json
+                 * @param {boolean} selected true 表示选择当前
+                 * */
+                render: function (json, selected) {
+                    if (selected === undefined) {
+                        selected = false;
+                    }
+                    var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
+                    _html += '<div class="layui-input-block">';
+                    _html += '<div id="{0}"></div>'.format(json.tag + json.id);
+                    _html += '</div>';
+                    // if(selected){
+                    // 	_html +='<div class="widget-view-action"><i class="layui-icon layui-icon-file"></i><i class="layui-icon layui-icon-delete"></i></div><div class="widget-view-drag"><i class="layui-icon layui-icon-screen-full"></i></div>';
+                    // }
+                    _html += '</div>';
+                    return _html;
+                },
+                update: function (json) {
+                    $('#' + json.id + ' .layui-input-block').empty();
+                    var _html = '';
+                    //重绘设计区改id下的所有元素
+                    _html += '<div id="{0}"></div>'.format(json.tag + json.id);
+                    $('#' + json.id + ' .layui-input-block').append(_html);
+                    labelGeneration.render({
+                        elem:'#' + json.tag + json.id,
+                        data:json.dateDefaultValue,
+                        isEnter:json.isEnter
+                    });
+                },
+                /* 获取对象 */
+                jsonData: function (id, index, columncount) {
+                    //分配一个新的ID
+                    var _json = JSON.parse(JSON.stringify(formField.labelGeneration));
                     _json.id = id == undefined ? autoId(_json.tag) : id;
                     _json.index = index;
                     return _json;
@@ -1895,7 +2112,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                  * @param {boolean} selected true 表示选择当前
                  * */
                 render: function (json, selected) {
-                    if (selected === undefined) {
+                     if (selected === undefined) {
                         selected = false;
                     }
                     var _html = '<div id="{0}" class="layui-form-item layui-row grid {2}"  data-id="{0}" data-tag="{1}" data-index="{3}" >'.format(json.id, json.tag, selected ? 'active' : '', json.index);
@@ -2130,6 +2347,30 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     that.components[_json.tag].update(_json);
                 }
             });
+            iconPicker.render({
+                // 选择器，推荐使用input
+                elem: '#' + _json.tag + _json.id + "property",
+                // 数据类型：fontClass/unicode，推荐使用fontClass
+                type: 'fontClass',
+                // 是否开启搜索：true/false，默认true
+                search: true,
+                // 是否开启分页：true/false，默认true
+                page: true,
+                // 每页显示数量，默认12
+                limit: 12,
+                // 每个图标格子的宽度：'43px'或'20%'
+                cellWidth: '43px',
+                // 点击回调
+                click: function (data) {
+                    _json.buttonIcon = data.icon;
+                    that.components[_json.tag].update(_json);
+                },
+                // 渲染成功后的回调
+                success: function(d) {
+                    //console.log(d);
+                }
+            });
+            iconPicker.checkIcon(_json.tag + _json.id + "property", '');
             $('#menu').click(function () {
                 layer.open({
                     type: 2,
@@ -2298,13 +2539,19 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 } else if (_key === 'anim' || _key === 'arrow') {
                     _json[data.elem.name] = data.value;
                     that.components[_json.tag].update(_json);
+                }else if (_key === 'buttonType') {
+                    _json.buttonType = data.value;
+                    that.components[_json.tag].update(_json);
+                }else if (_key === 'buttonSize') {
+                    _json.buttonSize = data.value;
+                    that.components[_json.tag].update(_json);
                 }
             });
             form.on('switch', function (data) {
                 var _key = data.elem.name;
                 var _value = data.elem.checked ? true : false;
                 if (_key === 'readonly' || _key == 'disabled' || _key === 'required' || _key === 'half' || _key === 'text' || _key === 'switchValue' || _key === 'isInput'
-                    || _key == 'iconPickerSearch' || _key === 'iconPickerPage') {
+                    || _key == 'iconPickerSearch' || _key === 'iconPickerPage' || _key === 'isEnter'|| _key === 'isLabel') {
                     _json[_key] = _value;
                     that.components[_json.tag].update(_json);//局部更新
                 }
@@ -2504,6 +2751,10 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         that.components[_json.tag].update(_json);//局部更新
                     }
                     if (_key === 'iconPickerCellWidth') {
+                        _json[_key] = _value;
+                        that.components[_json.tag].update(_json);//局部更新
+                    }
+                    if (_key === 'buttonVlaue') {
                         _json[_key] = _value;
                         that.components[_json.tag].update(_json);//局部更新
                     }
@@ -2720,7 +2971,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                             _fromItem.id = that.autoId(_fromItem.tag);
                             _fromItem.index = index;
                             parentItem.columns[colIndex].list.splice(index + 1, 0, _fromItem);
-                            that.findAndCopyJson(options.data,parentItem,evt.item.dataset.id);
+                            that.findAndCopyJson(options.data,parentItem,evt.item.parentElement.parentElement.dataset.id);
                             that.deleteJsonItem(options.data, _oldid);
                         } else {
                             /* 向指定目标放入数据 splice */
@@ -2734,6 +2985,10 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         }
                         that.renderForm();
 
+                    },
+                    //拖动结束
+                    onEnd: function (evt) {
+                        //console.log(evt);
                     }};
                 var gridSortable = Sortable.create(el,ops);
             }
@@ -2932,14 +3187,23 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     that.renderForm();
                 },
                 onEnd: function (evt) {
-                    var itemEl = evt.item;
+                    var newIndex = evt.newIndex;
+                    var oldIndex = evt.oldIndex;
                     //只有当to的目标容器是 formDesignerForm 才出发次逻辑
                     if (evt.to.id === 'formDesignerForm') {
-                        // .moveJsonArrayItem(evt.oldIndex, evt.newIndex);
+                        that.moveItem(evt.oldIndex, evt.newIndex);
                     }
                 }
             });
-
+            //移动视图
+            Class.prototype.moveItem = function (oldIndex,newIndex) {
+                var that = this
+                    , options = that.config;
+                var newData = options.data[newIndex];
+                var oldData = options.data[oldIndex];
+                options.data[newIndex] = oldData;
+                options.data[oldIndex] = newData;
+            }
             //导出数据
             $('.exportJson').on('click', function () {
                 document.getElementById('generate-code-view').value = JSON.stringify(options.data, null, 4);
@@ -3141,7 +3405,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     }
                 }
                 if (item.tag === 'grid') {
-                    that.bindGridSortEvent(item);
+                     that.bindGridSortEvent(item);
                     $.each(item.columns, function (index2, item2) {
                         var elem2 = $('#' + item.id + ' .widget-col-list').filter('.column' + index2);
                         if (item2.list.length > 0) {
@@ -3182,6 +3446,12 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         value: item.dateDefaultValue,
                         min: item.dataMinValue,
                         max: item.dataMaxValue,
+                    });
+                } else if (item.tag === 'labelGeneration') {
+                    labelGeneration.render({
+                        elem:'#' + item.tag + item.id,
+                        data:item.dateDefaultValue,
+                        isEnter:item.isEnter
                     });
                 } else if (item.tag === 'iconPicker') {
                     iconPicker.render({
