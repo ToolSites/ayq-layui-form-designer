@@ -207,7 +207,19 @@ layui.define(['layer'], function (exports) {
             disabled: false,
             document: '',
         },
-        iconPicker: {
+        sign: {
+            id:'-1',
+            index:'-1',
+            label: "签名组件",
+            tag: "sign",
+            tagIcon: 'sign',
+            labelWidth: null,
+            buttonVlaue:"手写签名",
+            buttonIcon:"",
+            data:"",
+            disabled: false,
+            document: '',
+        },iconPicker: {
             id:'-1',
             index:'-1',
             label: "图标选择器",
@@ -450,7 +462,7 @@ layui.define(['layer'], function (exports) {
         },
         c4:{
             name:"扩展组件(基于layui)",
-            list:['numberInput','iconPicker','cron','labelGeneration']
+            list:['numberInput','iconPicker','cron','labelGeneration','sign']
         }
         ,
         c5:{

@@ -686,6 +686,39 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     _json.index = index;
                     return _json;
                 }
+            },sign: {
+                /**
+                 * 根据json对象生成html对象
+                 * @param {object} json
+                 * @param {boolean} selected true 表示选择当前
+                 * */
+                render: function (json, selected) {
+                    if (selected === undefined) {
+                        selected = false;
+                    }
+                    var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    _html += '<label class="layui-form-label">{0}:</label>'.format(json.label);
+                    _html += '<div class="layui-input-block" style="margin-left: 0px;">';
+                    if (json.disabled) {
+                        _html += '<button id="{0}" type="button" class="layui-btn layui-btn-normal layui-btn-disabled custom-zc"><i class="layui-icon {1}"></i> {2}</button>'.format(json.id + json.tag ,json.buttonIcon,json.buttonVlaue);
+                    }else {
+                        _html += '<button id="{0}" type="button" class="layui-btn  layui-btn-normal custom-zc"><i class="layui-icon {1}"></i> {2}</button>'.format(json.id + json.tag ,json.buttonIcon,json.buttonVlaue);
+                    }
+                    if (json.data !== "") {
+                        _html += '<div class="signImg"><img src="{0}"></div>'.format(json.data);
+                    }
+                    _html += '</div>';
+                    _html += '</div>';
+                    return _html;
+                },
+                /* 获取对象 */
+                jsonData: function (id, index, columncount) {
+                    //分配一个新的ID
+                    var _json = JSON.parse(JSON.stringify(formField.sign));
+                    _json.id = id == undefined ? autoId(_json.tag) : id;
+                    _json.index = index;
+                    return _json;
+                },
             },dateRange: {
                 /**
                  * 根据json对象生成html对象
@@ -1129,6 +1162,35 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         elem:'#' + item.tag + item.id,
                         data:item.dateDefaultValue,
                         isEnter:item.isEnter
+                    });
+                } else if (item.tag === 'sign') {
+                    $('#' + item.id + item.tag).click(function () {
+                        layer.open({
+                            type: 2,
+                            title: '手写签名',
+                            btn: ['保存','关闭'], //可以无限个按钮
+                            yes: function(index, layero){
+                                //do something
+                                var iframe = window['layui-layer-iframe' + index];
+                                var data = iframe.getCanvasData();
+                                item.data = data;
+                                $('#' + item.id + ' .layui-input-block div').empty();
+                                var _html = '<div class="signImg"><img src="{0}"></div>'.format(item.data);
+                                $('#' + item.id + ' .layui-input-block').append(_html);
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                            },
+                            btn2: function (index, layero) {
+                                layer.close(index);
+                            },
+                            closeBtn: 1, //不显示关闭按钮
+                            shade: [0],
+                            area: ['60%', '60%'],
+                            offset: 'auto', //右下角弹出
+                            anim: 2,
+                            content: ['./handwrittenSignature.html', 'yes'], //iframe的url，no代表不显示滚动条
+                            success:function (layero,index) {
+                            }
+                        });
                     });
                 } else if (item.tag === 'cron' && !item.disabled) {
                     cron.render({
