@@ -46,9 +46,10 @@
     var demojs = [];
     //JavaScript代码区域
     layui.config(
-		{base: './ayq/modules/'}).use(['formPreview', 'form','layer'], function () {
+		{base: './ayq/modules/'}).use(['formPreview', 'form','layer','upload'], function () {
       var layer = layui.layer;
       var $ = layui.jquery;
+      var upload  = layui.upload;
       var index = layui.index;
       var formPreview = layui.formPreview;
       var form = layui.form;
