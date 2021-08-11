@@ -2,6 +2,7 @@ layui.define(['form'], function (exports) {
 
     var form = layui.form,
         $ = layui.jquery,
+        layer = layui.layer,
         index = 0,
 		oldId,
     MOD_NAME = 'labelGeneration',
@@ -75,10 +76,10 @@ layui.define(['form'], function (exports) {
                 _html += '<label class="layui-form-label">输入标签</label>';
                 _html += '<div class="layui-input-inline">';
 				if (options.isEnter) {
-                _html += '<input type="text" id="{0}" lay-verify="required" placeholder="按回车生成标签" autocomplete="off" class="layui-input">'
+                _html += '<input type="text" id="{0}"  placeholder="按回车生成标签" autocomplete="off" class="layui-input">'
                     .format(json.id);
 				} else {
-					_html += '<input type="text" id="{0}" lay-verify="required" placeholder="通过按钮生成标签" autocomplete="off" class="layui-input">'
+					_html += '<input type="text" id="{0}" placeholder="通过按钮生成标签" autocomplete="off" class="layui-input">'
                     .format(json.id);
 				}
                 _html += '</div>';
@@ -164,6 +165,10 @@ layui.define(['form'], function (exports) {
             $("#" + _json.id).keypress(function (event) {
                 if (event.which === 13) {
                     var _value = $(this).val();
+                    if (_value === "") {
+                        layer.msg('标签值不能为空');
+                        return;
+                    }
                     index = index + 1;
                     var _html = '<div class="layui-btn {0} none-transition" id="{2}" ng-index="{3}" ng-color="{0}">{1}<i class="layui-icon layui-icon-close"></i></div>'
                         .format(colorClass, _value, _json.id + index, index);
@@ -173,11 +178,16 @@ layui.define(['form'], function (exports) {
                         that.deleteValue($(this).parent().text(), $(this).parent().attr("ng-color"));
                         $(this).parent().remove();
                     });
+                    return false;
                 }
             });
         } else {
             $("#" + _json.id + "-button").click(function (event) {
                 var _value = $("#" + _json.id).val();
+                if (_value === "") {
+                    layer.msg('标签值不能为空');
+                    return;
+                }
                 index = index + 1;
                 var _html = '<div class="layui-btn {0} none-transition" id="{2}" ng-index="{3}" ng-color="{0}">{1}<i class="layui-icon layui-icon-close"></i></div>'
                     .format(colorClass, _value, _json.id + index, index);
@@ -225,7 +235,7 @@ layui.define(['form'], function (exports) {
             , that.config
             , labelGeneration.config
             , options);
-        that.render();
+        that.render(options);
     }
 
     //核心入口 初始化一个 regionSelect 类
