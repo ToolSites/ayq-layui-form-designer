@@ -59,7 +59,9 @@ render.geticeEditorObjects()
 var render = formPreview.render({
           elem: '#testdemo',
           data: [],//表单设计数据
-          formData: {"textarea_1":"123","input_2":"123","password_3":"123"}//要提交的表单数据
+          formData: {"textarea_1":"123",
+            "input_2":"123",
+            "password_3":"123"}//要回显的表单数据
         });
 //重新渲染数据
 render.reload(options)
