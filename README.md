@@ -83,7 +83,11 @@ render.getFiles()
 //数据案例 select 对应文件对象的id uploadUrl对应文件的上传路径
 [{select: ""filefile_1"",uploadUrl: ""}]
 
-//获取表单数据  **注意:** 当前方法会避开校验规则，最好放在表单提交里面 form.on('submit(demo1)', function(data){}）；
+//获取表单数据 
+**
+注意: 当前方法会避开校验规则，最好放在表单提交里面 
+form.on('submit(demo1)', function(data){}）；
+** 
 render.getFormData()
 
 //回显表单数据 
@@ -95,10 +99,12 @@ render.globalDisable()
 //全局启用表单
 render.globalNoDisable()
 
- ** 说明：  这些方法有2个组件不受控制（文件组件和图片组件），
+ ** 
+说明：  这些方法有2个组件不受控制（文件组件和图片组件），
 我把这两个组件通过方法单独提出来，应为文件上传的方式比较多，
 提出来让使用者自己去定义和实现自己的文件上传方式，
-具体的案例在preview.html里面已经写好，你们自己参考** 
+具体的案例在preview.html里面已经写好，你们自己参考
+** 
 ```
 
 #### 基础参数
