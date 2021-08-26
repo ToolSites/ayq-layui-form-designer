@@ -31,6 +31,7 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0826/172937_c2c1adb8_4776207.png "3.PNG")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0826/172950_5c3d7bfe_4776207.png "4.PNG")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0826/173003_55605516_4776207.png "5.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0826/173143_ce481242_4776207.png "6.PNG")
 
 #### 入门案例（设计页面）
 
