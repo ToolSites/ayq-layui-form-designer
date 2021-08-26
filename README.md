@@ -28,8 +28,9 @@
 5.  支持通过url获取远程数据动态显示组件（如下拉框、编辑器、图片等）
 6.  支持定制布局和背景
 
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0524/161635_1627108b_4776207.png "13.PNG")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0527/094341_983939d5_4776207.png "14.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0826/172937_c2c1adb8_4776207.png "3.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0826/172950_5c3d7bfe_4776207.png "4.PNG")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0826/173003_55605516_4776207.png "5.PNG")
 
 #### 入门案例（设计页面）
 
