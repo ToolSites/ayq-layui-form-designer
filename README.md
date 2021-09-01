@@ -1,7 +1,33 @@
+中文 &nbsp; | &nbsp; [English](./README_EN.md)
+
+<p align="center">
+  <a href="http://www.layui.com">
+    <img src="https://sentsin.gitee.io/res/images/layui/layui.png" alt="layui" width="360">
+  </a>
+</p>
+<p align="center">
+  Classic modular front-end UI framework
+</p>
+
+---
+
+<p align="center">
+    <a href="https://www.npmjs.com/package/layui"><img src="https://img.shields.io/npm/v/layui.svg?sanitize=true" alt="Version"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue" alt="License MIT"></a>
+    <a href="https://gitee.com/ayq947/ayq-layui-form-designer"><img src="https://gitee.com/ayq947/ayq-layui-form-designer/badge/star.svg?theme=dark" alt="Gitee star"></a>
+    <a href="https://gitee.com/ayq947/ayq-layui-form-designer"><img src="https://gitee.com/ayq947/ayq-layui-form-designer/badge/fork.svg?theme=dark" alt="Gitee fork"></a>
+</p>
+
+<p align="center">
+    <a href="https://gitee.com/ayq947/ayq-layui-form-designer">Github 仓库</a> &nbsp; | &nbsp; 
+    <a href="http://116.62.237.101:8009/" target="_blank">在线体验</a>
+</p>
+
 # ayq-layui-form-designer
 
+
 #### 介绍
-基于layui的表单设计器,前期设计基于fwr-layui-formdesigner，因fwr-layui-formdesigner存在很多问题，不在维护，即基于这个上重新做了开发
+基于layui的表单设计器
 
 #### 声明：基本代码已经上传，可以在上面玩一玩，测试一下BUG，希望大家提出问题，也希望大家参与进来，提供一些有趣的组件，现在发布第一版本V1.0.0，开发和编写文档不易，要求不多，给个Star支持一下，需要一些开发动力，嘿嘿
 
