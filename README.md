@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-    <a href="https://gitee.com/ayq947/ayq-layui-form-designer">Github 仓库</a> &nbsp; | &nbsp; 
+    <a href="https://gitee.com/ayq947/ayq-layui-form-designer">Gitee 仓库</a> &nbsp; | &nbsp; 
     <a href="http://116.62.237.101:8009/" target="_blank">在线体验</a>
 </p>
 
