@@ -1,4 +1,4 @@
-中文 &nbsp; | &nbsp; [English](./README_EN.md)
+中文 &nbsp; | &nbsp; [English](./README.en.md)
 
 <p align="center">
   <a href="http://www.layui.com">
