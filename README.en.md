@@ -1,8 +1,33 @@
+[中文](./README.md) &nbsp; | &nbsp; English
+
+<p align="center">
+  <a href="http://www.layui.com">
+    <img src="https://sentsin.gitee.io/res/images/layui/layui.png" alt="layui" width="360">
+  </a>
+</p>
+<p align="center">
+  Classic modular front-end UI framework
+</p>
+
+---
+
+<p align="center">
+    <a href="https://www.npmjs.com/package/layui"><img src="https://img.shields.io/npm/v/layui.svg?sanitize=true" alt="Version"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue" alt="License MIT"></a>
+    <a href="https://gitee.com/ayq947/ayq-layui-form-designer"><img src="https://gitee.com/ayq947/ayq-layui-form-designer/badge/star.svg?theme=dark" alt="Gitee star"></a>
+    <a href="https://gitee.com/ayq947/ayq-layui-form-designer"><img src="https://gitee.com/ayq947/ayq-layui-form-designer/badge/fork.svg?theme=dark" alt="Gitee fork"></a>
+</p>
+
+<p align="center">
+    <a href="https://gitee.com/ayq947/ayq-layui-form-designer">Github</a> &nbsp; | &nbsp; 
+    <a href="http://116.62.237.101:8009/" target="_blank">Online Demo</a>
+</p>
+
 # ayq-layui-form-designer
 
 ####Introduction
 
-The preliminary design of the form designer based on layui is based on FWR layui FormDesigner. Because there are many problems with FWR layui FormDesigner, it is not maintained, that is, it is redeveloped based on this
+The preliminary design of the form designer based on layui is based on FWR layui FormDesigner.
 
 ####Statement: the basic code has been uploaded. You can play on it and test the bug. I hope you can ask questions and participate in providing some interesting components. Now the first version v1.0.0 is released. It is not easy to develop and write documents, and there are not many requirements. It needs some development power to support a star. Hey hey
 
