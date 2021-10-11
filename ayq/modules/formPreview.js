@@ -2,7 +2,7 @@
  +------------------------------------------------------------------------------------+
  + ayq-layui-form-designer(layui表单设计器)
  +------------------------------------------------------------------------------------+
- + ayq-layui-form-designer v1.1.0
+ + ayq-layui-form-designer v1.1.6
  * MIT License By http://116.62.237.101:8009/
  + 作者：谁家没一个小强
  + 官方：
@@ -17,7 +17,7 @@
  + 4.表单数据的获取与回显,禁用全表单
  +------------------------------------------------------------------------------------+
  */
-layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField','numberInput', "cron","labelGeneration"]
+layui.config({base: './ayq/modules/'}).define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField',"numberInput","iconPicker", "cron","labelGeneration"]
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
@@ -392,18 +392,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _disabled = json.disabled ? 'disabled=""' : '';
                     var _disabledClass = json.disabled ? ' layui-disabled' : '';
                     var _required = json.required ? 'required' : '';
-                    var _width = json.width.replace(/[^\d]/g,'');
-                    if(''!=_width){
-                        _width = 100 - parseInt(_width);
-                    }
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}" style="width: {3}px"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
                     _html += '<div class="layui-input-block" style="width:calc({0} - {1}px);margin-left: {1}px;">'.format(json.width,json.labelWidth);
                     _html += '<input type="cronExpression" name="{0}" id="{5}" value="{1}" lay-verify="{6}" placeholder="{2}" class="layui-input{4}" lay-filter="iconPicker" lay-vertype="tips" {3}>'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.placeholder, _disabled, _disabledClass,json.tag + json.id,_required);
-                    if (!json.disabled) {
-                        _html += '<button id="{0}-button" style="position: absolute;top: 0;right: 0px;cursor: pointer;" type="button" class="layui-btn">生成</button>'.format(json.tag + json.id);
-                    }
                     _html += '</div>';
                     _html += '</div>';
                     return _html;

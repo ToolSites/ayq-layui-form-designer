@@ -2,7 +2,7 @@
  +------------------------------------------------------------------------------------+
  + ayq-layui-form-designer(layui表单设计器)
  +------------------------------------------------------------------------------------+
- + ayq-layui-form-designer v1.1.5
+ + ayq-layui-form-designer v1.1.6
  * MIT License By http://116.62.237.101:8009/
  + 作者：谁家没一个小强
  + 官方：
@@ -17,7 +17,7 @@
  + 4.表单数据的获取与回显,禁用全表单
  +------------------------------------------------------------------------------------+
  */
-layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate", "colorpicker", "layedit", "carousel", "upload", "formField","numberInput","iconPicker", "cron","labelGeneration"]
+layui.config({base: './ayq/modules/'}).define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate", "colorpicker", "layedit", "carousel", "upload", "formField","numberInput","iconPicker", "cron","labelGeneration"]
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
@@ -4253,16 +4253,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
             var ins = new Class(options);
             return thisIns.call(ins);
         };
-
-
-
-
-        //加载组件所需样式
-        layui.link(layui.cache.base + 'formDesigner.css?v=1', function () {
-            //样式加载完毕的回调
-
-        }, 'formDesigner'); //此处的“regionSelect”要对应 regionSelect.css 中的样式： html #layuicss-regionSelect{}
-
 
         exports('formDesigner'
             , formDesigner);
