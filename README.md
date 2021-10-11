@@ -20,7 +20,7 @@
 
 <p align="center">
     <a href="https://gitee.com/ayq947/ayq-layui-form-designer">Gitee 仓库</a> &nbsp; | &nbsp; 
-    <a href="http://116.62.237.101:8009/" target="_blank">在线体验</a>
+    <a href="http://www.anyongqiang.com/" target="_blank">在线体验</a>
 </p>
 
 # ayq-layui-form-designer
@@ -33,12 +33,12 @@
 #### 声明：基本代码已经上传，可以在上面玩一玩，测试一下BUG，希望大家提出问题，也希望大家参与进来，提供一些有趣的组件，现在发布第一版本V1.0.0，开发和编写文档不易，要求不多，给个Star支持一下，需要一些开发动力，嘿嘿
 
 #### 演示地址
-[http://www.ayq.com/](http://116.62.237.101:8009/)
+[http://www.anyongqiang.com/](http://www.anyongqiang.com/)
 
 #### 说明：基本组件已经写得差不多，后面会优化整体的功能，提升体验感，后续会优化一些显示特效，主要会做表单数据的获取与回显，手写签名组件暂时不开源，手写签名自适应pc和移动端，但可以体验一些，提出有用的意见。
 
 #### 手写签名演示地址
-[http://www.ayqsign.com/](http://116.62.237.101:8009/HandwrittenSignature/index.html)
+[http://www.anyongqiang.com/HandwrittenSignature/index.html](http://www.anyongqiang.com/HandwrittenSignature/index.html)
 
 #### 使用说明
 
