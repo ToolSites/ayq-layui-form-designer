@@ -347,6 +347,14 @@ Specific cases have been written in preview.html for your own reference
 
 8. Update version v1.1.5
 
+- 2021-10-11
+
+1. Simplify the style introduced and return to the simplicity of layui
+
+2. Optimize some related details
+
+8. Update version v1.1.6
+
 ####Stunt
 
 1. Use Readme\_ 30. MD to support different languages, such as readme\_ en.md, Readme\_ zh.md
