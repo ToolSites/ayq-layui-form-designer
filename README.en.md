@@ -20,7 +20,7 @@
 
 <p align="center">
     <a href="https://gitee.com/ayq947/ayq-layui-form-designer">Gitee</a> &nbsp; | &nbsp; 
-    <a href="http://116.62.237.101:8009/" target="_blank">Online Demo</a>
+    <a href="http://www.anyongqiang.com/" target="_blank">Online Demo</a>
 </p>
 
 # ayq-layui-form-designer
@@ -33,13 +33,13 @@ The preliminary design of the form designer based on layui is based on FWR layui
 
 ####Demo address
 
-[ http://www.ayq.com/ ]( http://116.62.237.101:8009/ )
+[http://www.anyongqiang.com/](http://www.anyongqiang.com/)
 
 ####Note: the basic components have been written almost. Later, the overall function will be optimized to improve the sense of experience. Later, some display effects will be optimized, mainly for the acquisition and echo of form data. The handwritten signature component is not open source for the time being. The handwritten signature is adaptive to the PC and mobile terminal, but you can experience some and put forward useful opinions.
 
 ####Handwritten signature presentation address
 
-[ http://www.ayqsign.com/ ]( http://116.62.237.101:8009/HandwrittenSignature/index.html )
+[ http://www.anyongqiang.com/HandwrittenSignature/index.html ]( http://www.anyongqiang.com/HandwrittenSignature/index.html )
 
 ####Instructions for use
 
